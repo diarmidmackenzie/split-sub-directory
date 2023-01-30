@@ -29,7 +29,9 @@ jobs:
         run: |
           # this is to fix GIT not liking owner of the checkout dir
           # https://github.com/actions/runner/issues/2033#issuecomment-1204205989
+          ls - $PWD
           chown -R $(id -u):$(id -g) $PWD
+          ls - $PWD
 
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
