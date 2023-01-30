@@ -1,7 +1,10 @@
 name: Push updates to examples
+env:
+  organization: diarmidmackenzie
+  examples-folder: examples
 on:
- workflow_dispatch:
- push:
+  workflow_dispatch:
+  push:
 jobs:
   updateexamples:
     runs-on: ubuntu-latest
@@ -24,10 +27,10 @@ jobs:
 
       - name: Pull latest version
         run: |
-          echo Cloning ssh://git@github.com/diarmidmackenzie/${{ matrix.examples.repo }}.git
-          git clone ssh://git@github.com/diarmidmackenzie/${{ matrix.examples.repo }}.git
+          echo Cloning ssh://git@github.com/${{ organization }}/${{ matrix.examples.repo }}.git
+          git clone ssh://git@github.com/${{ organization }}/${{ matrix.examples.repo }}.git
           echo Copy latest code into repo.
-          cp -R examples/${{ matrix.examples.name }}/* ${{ matrix.examples.repo }}
+          cp -R ${{ examples-folder }}/${{ matrix.examples.name }}/* ${{ matrix.examples.repo }}
 
       - name: Push to Git
         run: |
