@@ -13,19 +13,10 @@ jobs:
           ssh-add -L
           git clone ssh://git@github.com/diarmidmackenzie/sample-example.git
           cp -R examples/example1/* sample-example
-          pwd
-          cd sample-example
-          pwd
 
       - name: Push to Git
         run: |
-          pwd
           cd sample-example
-          pwd
-          eval `ssh-agent -s`
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-          # diagnostics
-          ssh-add -L
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
