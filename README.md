@@ -2,7 +2,7 @@
 
 
 
-This repository is a proof-of-concept to show how a group of sub-directories of a repository can be cloned into separate repositories (one per-sub-directory), and then automatically kept in sync via GitHub actions.
+This repository is a proof-of-concept to show how a group of sub-directories of a repository can be mirrored into separate repositories (one per-sub-directory), and then automatically kept in sync via GitHub actions.
 
 
 
@@ -31,7 +31,7 @@ Assumptions / Limitations
 - Changes are always made in the master repo.  Any changes made in the mirror repo are liable to being overwritten by changes to the master repo.
 - There's no need to have a complete version history (check-in comments etc.) in the mirror repos.  Just having code up-to-date is enough.  Check-in comments are always available in the master repo if needed.
 - The master repo & mirror repos are all under a single user / organization in GitHub (wouldn't be too hard to change this, but would require a few minor code changes).
-- All sub-directories to be cloned are under a single parent folder
+- All sub-directories to be mirrored are under a single parent folder
 - Because files are copied from master to mirror using a simple copy over, this doesn't handle file deletions & file moves.  For those, you'll need to manually tidy up the mirror repo.
 
 
@@ -43,7 +43,7 @@ Assumptions / Limitations
 If you have a repository with some sub-folders that you want to mirror to independent repositiories, you need to set up as follows:
 
 - Copy the [`push.yml`](https://github.com/diarmidmackenzie/split-sub-directory/blob/main/.github/workflows/push.yml) file into `.github/workflows` in your repo
-- Update the file to reflect the location in your repo of the sub-directories to clone (`examples-folder`) and the name of your GitHub user / organization (`organization`) - see the `env:` section at the top of that file
+- Update the file to reflect the location in your repo of the sub-directories to mirror (`examples-folder`) and the name of your GitHub user / organization (`organization`) - see the `env:` section at the top of that file
 - Set up one or more mirror repos, as per the next section, including modifying the `examples:` and `ssh-private-key:` lists, and adding the required Deploy key as a secret in the master repo.
 - Test by either pushing an update to the master repo, or using the "Run workflow" button (see image below).  If everything is set up, you should see green checks, and you should also see the latest content replicated
 
