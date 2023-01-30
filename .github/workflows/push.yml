@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Pull latest version & push to git.
+      - name: Pull latest version
         run: |
           eval `ssh-agent -s`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
@@ -13,7 +13,14 @@ jobs:
           ssh-add -L
           git clone ssh://git@github.com/diarmidmackenzie/sample-example.git
           cp -R examples/example1/* sample-example
+
+      - name: Push to Git
+        run: |
           cd sample-example
+          eval `ssh-agent -s`
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # diagnostics
+          ssh-add -L
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
