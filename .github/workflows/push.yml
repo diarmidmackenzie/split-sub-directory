@@ -15,7 +15,7 @@ jobs:
       - name: Pull latest version
         run: |
           eval `ssh-agent -s`
-          #ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}"
           # diagnostics
           ssh-add -L
@@ -28,7 +28,7 @@ jobs:
         run: |
           cd sample-${{ matrix.example-name }}
           eval `ssh-agent -s`
-          #ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}"
           # diagnostics
           ssh-add -L
