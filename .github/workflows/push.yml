@@ -1,4 +1,4 @@
-name: Fetch updates to latest code from master repo
+name: Push updates
 on: workflow_dispatch
 jobs:
   build:
@@ -18,6 +18,10 @@ jobs:
           pwd
           cd sample-example
           pwd
+          eval `ssh-agent -s`
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # diagnostics
+          ssh-add -L
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
