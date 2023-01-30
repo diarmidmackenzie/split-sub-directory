@@ -47,11 +47,11 @@ jobs:
           # diagnostics
           ssh-add -l
           ssh-add -L
-          git push "git@github.com:diarmidmackenzie/sample-example.git" HEAD:"main"
-
-      - name: Setup tmate session
-        if: success() || failure()
-        uses: mxschmitt/action-tmate@v3
+          git remote add origin https://github.com/diarmidmackenzie/sample-example
+          git pull
+          git branch --set-upstream-to=origin/main main
+          git pull --allow-unrelated-histories
+          git push -u origin main
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
