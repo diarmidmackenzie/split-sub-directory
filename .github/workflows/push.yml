@@ -24,6 +24,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
+          # Only commit if there is something changed that needs committing.
           git diff-index --quiet HEAD || git commit "Updated from latest code"
           git push
 
