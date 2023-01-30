@@ -11,7 +11,7 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           # diagnostics
           ssh-add -L
-          git clone gtit@github.com:/diarmidmackenzie/sample-example
+          git clone ssh://git@github.com/diarmidmackenzie/sample-example.git
           cp -R examples/example1/* sample-example
           pwd
           cd sample-example
