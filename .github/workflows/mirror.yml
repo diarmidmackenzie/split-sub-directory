@@ -39,6 +39,12 @@ jobs:
         run: |
           git filter-repo --path=examples/example1/ --path-rename=examples/example1/:
 
+      # Set up sssh keys
+      - name: Set up SSH keys
+        run: |
+          eval `ssh-agent -s`
+          ssh-add -K ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Setup tmate session
         if: success() || failure()
         uses: mxschmitt/action-tmate@v3
