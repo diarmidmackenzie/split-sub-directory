@@ -37,7 +37,7 @@ jobs:
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
         run: |
-          git filter-repo --path=examples/example1 --path-rename=examples/example1:
+          git filter-repo --path=examples/example1/ --path-rename=examples/example1/:
 
       - name: Setup tmate session
         if: success() || failure()
