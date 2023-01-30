@@ -10,18 +10,18 @@ jobs:
       matrix:
         examples:
           - name: example1
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
           - name: example2
-            key: ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}
 
     steps:
       - uses: actions/checkout@v3
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.SSH_PRIVATE_KEY }}
+            ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}
+
       - name: Pull latest version
         run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< "${{  matrix.examples.key }}"
-          # diagnostics
-          ssh-add -L
           echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
           git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
           echo Copy latest code into repo.
@@ -30,10 +30,6 @@ jobs:
       - name: Push to Git
         run: |
           cd sample-${{ matrix.examples.name }}
-          eval `ssh-agent -s`
-          ssh-add - <<< "${{  matrix.examples.key }}"
-          # diagnostics
-          ssh-add -L
           git config user.name github-actions
           git config user.email github-actions@github.com
           echo git add .
