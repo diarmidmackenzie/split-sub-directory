@@ -44,7 +44,7 @@ If you have a repository with some sub-folders that you want to mirror to indepe
 
 - Copy the [`push.yml`](https://github.com/diarmidmackenzie/split-sub-directory/blob/main/.github/workflows/push.yml) file into `.github/workflows` in your repo
 - Update the file to reflect the location in your repo of the sub-directories to clone (`examples-folder`) and the name of your GitHub user / organization (`organization`) - see the `env:` section at the top of that file
-- Set up one or more mirror repos, as per the next section, including modifying the `examples:` and `ssh-private-key:` lists.
+- Set up one or more mirror repos, as per the next section, including modifying the `examples:` and `ssh-private-key:` lists, and adding the required Deploy key as a secret in the master repo.
 - Test by either pushing an update to the master repo, or using the "Run workflow" button (see image below).  If everything is set up, you should see green checks, and you should also see the latest content replicated
 
 
