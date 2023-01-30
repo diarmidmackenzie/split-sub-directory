@@ -14,6 +14,7 @@ jobs:
         run: |
           eval `ssh-agent -s`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}"
           # diagnostics
           ssh-add -L
           git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
@@ -24,6 +25,7 @@ jobs:
           cd sample-${{ matrix.example-name }}
           eval `ssh-agent -s`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}"
           # diagnostics
           ssh-add -L
           git config user.name github-actions
