@@ -7,7 +7,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: Pull latest version
         run: |
-          git clone https://github.com/diarmidmackenzie/sample-example
+          eval `ssh-agent -s`
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # diagnostics
+          ssh-add -L
+          git clone gtit@github.com:/diarmidmackenzie/sample-example
           cp -R examples/example1/* sample-example
           pwd
           cd sample-example
