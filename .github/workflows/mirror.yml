@@ -20,34 +20,29 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Set ownership
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
         run: |
-          # this is to fix GIT not liking owner of the checkout dir
-          # https://github.com/actions/runner/issues/2033#issuecomment-1204205989
-          ls -l $PWD
-          chown -R $(id -u):$(id -g) $PWD
-          ls -l $PWD
-          # An alternative fix
-          git config --get safe.directory
-          git config --global --add safe.directory /github/workspace
-          git config --get safe.directory
+          python -m pip install --upgrade pip
+          pip3 install git-filter-repo
 
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
-        uses: wmde/git-filter-repo-docker-action@v1
-        with:
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-          targetOrg: diarmidmackenzie
-          targetRepo: sample-example
-          targetBranch: main
-          filterArguments: >-
-            --path=examples/example1
-            --path-rename=examples/example1:
+        run: |
+          python git-filter-repo path=examples/example1 path-rename=examples/example1:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -58,7 +53,3 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          
-          
-          
-          
