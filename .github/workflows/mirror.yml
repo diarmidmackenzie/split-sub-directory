@@ -46,6 +46,8 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           # diagnostics
           ssh-add -l
+          ssh-add -L
+          git push "git@github.com:diarmidmackenzie/sample-example.git" HEAD:"main"
 
       - name: Setup tmate session
         if: success() || failure()
