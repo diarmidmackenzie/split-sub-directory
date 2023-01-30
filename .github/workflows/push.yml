@@ -17,7 +17,7 @@ jobs:
           eval `ssh-agent -s`
           
           echo SSH_KEY
-          ssh-add - <<< "$SSH_KEY"
+          ssh-add - <<< $SSH_KEY
           # diagnostics
           ssh-add -L
           echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
@@ -31,7 +31,7 @@ jobs:
           eval `ssh-agent -s`
           SSH_KEY = case ${{ matrix.example-name }} in "example1") "${{ secrets.SSH_PRIVATE_KEY }}" ;; "example2") "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}" ;; esac
           echo SSH_KEY
-          ssh-add - <<< "$SSH_KEY"
+          ssh-add - <<< $SSH_KEY
           # diagnostics
           ssh-add -L
           git config user.name github-actions
