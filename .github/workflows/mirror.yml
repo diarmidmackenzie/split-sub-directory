@@ -49,8 +49,8 @@ jobs:
           ssh-add -L
           echo git remote add origin https://github.com/diarmidmackenzie/sample-example
           git remote add origin https://github.com/diarmidmackenzie/sample-example
-          echo git pull
-          git pull
+          echo git pull origin main
+          git pull origin main
           echo git branch --set-upstream-to=origin/main main
           git branch --set-upstream-to=origin/main main
           echo git pull --allow-unrelated-histories
