@@ -43,7 +43,9 @@ jobs:
       - name: Set up SSH keys
         run: |
           eval `ssh-agent -s`
-          ssh-add <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          # diagnostics
+          ssh-add -l
 
       - name: Setup tmate session
         if: success() || failure()
