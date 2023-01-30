@@ -17,7 +17,9 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}"
           # diagnostics
           ssh-add -L
+          echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
           git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
+          echo Copy latest code into repo.
           cp -R examples/${{ matrix.example-name }}/* sample-${{ matrix.example-name }}
 
       - name: Push to Git
