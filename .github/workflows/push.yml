@@ -3,6 +3,11 @@ on: workflow_dispatch
 jobs:
   updateexamples:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        example-name: ["example1", "example2"]
+
     steps:
       - uses: actions/checkout@v3
       - name: Pull latest version
@@ -11,12 +16,12 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           # diagnostics
           ssh-add -L
-          git clone ssh://git@github.com/diarmidmackenzie/sample-example.git
-          cp -R examples/example1/* sample-example
+          git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
+          cp -R examples/${{ matrix.example-name }}/* sample-${{ matrix.example-name }}
 
       - name: Push to Git
         run: |
-          cd sample-example
+          cd sample-${{ matrix.example-name }}
           eval `ssh-agent -s`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           # diagnostics
