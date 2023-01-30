@@ -34,6 +34,10 @@ jobs:
           python -m pip install --upgrade pip
           pip3 install git-filter-repo
 
+      - name: Setup tmate session
+        if: success() || failure()
+        uses: mxschmitt/action-tmate@v3
+        
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
         run: |
