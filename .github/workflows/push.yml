@@ -10,7 +10,9 @@ jobs:
       matrix:
         examples:
           - name: example1
+            repo: sample-example1
           - name: example2
+            repo: sample-example2
 
     steps:
       - uses: actions/checkout@v3
@@ -22,21 +24,22 @@ jobs:
 
       - name: Pull latest version
         run: |
-          echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
-          git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
+          echo Cloning ssh://git@github.com/diarmidmackenzie/${{ matrix.examples.repo }}.git
+          git clone ssh://git@github.com/diarmidmackenzie/${{ matrix.examples.repo }}.git
           echo Copy latest code into repo.
-          cp -R examples/${{ matrix.examples.name }}/* sample-${{ matrix.examples.name }}
+          cp -R examples/${{ matrix.examples.name }}/* ${{ matrix.examples.repo }}
 
       - name: Push to Git
         run: |
-          cd sample-${{ matrix.examples.name }}
+          cd ${{ matrix.examples.repo }}
           git config user.name github-actions
           git config user.email github-actions@github.com
-          echo git add .
+          # echo messages to console, so we can easily tell which git command an error came from.
+          echo git add...
           git add .
           # Only commit if there is something changed that needs committing.
-          echo git diff-index
+          echo git diff & commit...
           git diff-index --exit-code HEAD || git commit -m "Updated from latest code"
-          echo git push
+          echo git push...
           git push
 
