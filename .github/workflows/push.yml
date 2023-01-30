@@ -1,5 +1,7 @@
 name: Push updates to examples
-on: push
+on:
+ workflow_dispatch:
+ push:
 jobs:
   updateexamples:
     runs-on: ubuntu-latest
