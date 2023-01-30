@@ -32,6 +32,10 @@ jobs:
           ls -l $PWD
           chown -R $(id -u):$(id -g) $PWD
           ls -l $PWD
+          # An alternative fix
+          git config --get safe.directory
+          git config --global --add safe.directory /github/workspace
+          git config --get safe.directory
 
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
