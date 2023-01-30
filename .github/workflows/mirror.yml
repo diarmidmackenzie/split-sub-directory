@@ -1,71 +1,24 @@
-# Workflow to mirror examples to other repos
+# This is a basic workflow to help you get started with Actions
 
-name: Mirror
+name: Update all example repos
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  mirror:
-    # The type of runner that the job will run on
+  # 
+  updateallexamples:
     runs-on: ubuntu-latest
-
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - uses: actions/github-script@v6
         with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip3 install git-filter-repo
-        
-      # Runs git-filter-repo to filter the repo.
-      - name: Filter repo
-        run: |
-          git filter-repo --path=examples/example1/ --path-rename=examples/example1/:
-
-      # Set up sssh keys
-      - name: Set up SSH keys
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-          # diagnostics
-          ssh-add -l
-          ssh-add -L
-          echo git remote add origin https://github.com/diarmidmackenzie/sample-example
-          git remote add origin https://github.com/diarmidmackenzie/sample-example
-          echo git push -u origin main
-          git push -u origin main
-          echo git pull origin main
-          #git pull origin main
-          echo git branch --set-upstream-to=origin/main main
-          #git branch --set-upstream-to=origin/main main
-          echo git pull --allow-unrelated-histories --no-rebase
-          #git pull --allow-unrelated-histories --no-rebase
-          echo git push -u origin main
-          #git push -u origin main
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          github-token: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'diarmidmackenzie',
+              repo: 'sample-example',
+              workflow_id: 'main.yml',
+              ref: 'main'
+            })
