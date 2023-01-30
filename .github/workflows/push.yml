@@ -15,7 +15,7 @@ jobs:
       - name: Pull latest version
         run: |
           eval `ssh-agent -s`
-          SSH_KEY = case ${{ matrix.example-name }} in "example1") ${{ secrets.SSH_PRIVATE_KEY }} ;; "example2") ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}
+          SSH_KEY = case ${{ matrix.example-name }} in "example1") ${{ secrets.SSH_PRIVATE_KEY }} ;; "example2") ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }} ;; esac
           echo SSH_KEY
           ssh-add - <<< "$SSH_KEY"
           # diagnostics
@@ -29,7 +29,7 @@ jobs:
         run: |
           cd sample-${{ matrix.example-name }}
           eval `ssh-agent -s`
-          SSH_KEY = case ${{ matrix.example-name }} in "example1") ${{ secrets.SSH_PRIVATE_KEY }} ;; "example2") ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}
+          SSH_KEY = case ${{ matrix.example-name }} in "example1") ${{ secrets.SSH_PRIVATE_KEY }} ;; "example2") ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }} ;; esac
           echo SSH_KEY
           ssh-add - <<< "$SSH_KEY"
           # diagnostics
