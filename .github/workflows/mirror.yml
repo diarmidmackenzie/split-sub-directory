@@ -33,15 +33,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip3 install git-filter-repo
-
-      - name: Setup tmate session
-        if: success() || failure()
-        uses: mxschmitt/action-tmate@v3
         
       # Runs git-filter-repo to filter the repo.
       - name: Filter repo
         run: |
-          python git-filter-repo path=examples/example1 path-rename=examples/example1:
+          git filter-repo --path=examples/example1 --path-rename=examples/example1:
+
+      - name: Setup tmate session
+        if: success() || failure()
+        uses: mxschmitt/action-tmate@v3
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
