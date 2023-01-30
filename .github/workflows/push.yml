@@ -8,30 +8,30 @@ jobs:
 
     strategy:
       matrix:
-        example-name: ["example1", "example2"]
+        examples:
+          - name: example1
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+          - name: example2
+            key: ${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}
 
     steps:
       - uses: actions/checkout@v3
       - name: Pull latest version
         run: |
           eval `ssh-agent -s`
-          
-          echo SSH_KEY
-          ssh-add - <<< $SSH_KEY
+          ssh-add - <<< "${{  matrix.examples.key }}"
           # diagnostics
           ssh-add -L
-          echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
-          git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.example-name }}.git
+          echo Cloning ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
+          git clone ssh://git@github.com/diarmidmackenzie/sample-${{ matrix.examples.name }}.git
           echo Copy latest code into repo.
-          cp -R examples/${{ matrix.example-name }}/* sample-${{ matrix.example-name }}
+          cp -R examples/${{ matrix.examples.name }}/* sample-${{ matrix.examples.name }}
 
       - name: Push to Git
         run: |
-          cd sample-${{ matrix.example-name }}
+          cd sample-${{ matrix.examples.name }}
           eval `ssh-agent -s`
-          SSH_KEY = case ${{ matrix.example-name }} in "example1") "${{ secrets.SSH_PRIVATE_KEY }}" ;; "example2") "${{ secrets.SSH_PRIVATE_KEY_EXAMPLE2 }}" ;; esac
-          echo SSH_KEY
-          ssh-add - <<< $SSH_KEY
+          ssh-add - <<< "${{  matrix.examples.key }}"
           # diagnostics
           ssh-add -L
           git config user.name github-actions
