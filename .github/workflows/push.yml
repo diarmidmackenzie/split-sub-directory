@@ -37,8 +37,8 @@ jobs:
           echo git add .
           git add .
           # Only commit if there is something changed that needs committing.
-          echo git diff-index || git commit
-          git diff-index --quiet HEAD || git commit "Updated from latest code"
+          echo git diff-index
+          git diff-index HEAD || git commit "Updated from latest code"
           echo git push
           git push
 
