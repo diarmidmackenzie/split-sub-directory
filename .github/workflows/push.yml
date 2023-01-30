@@ -1,5 +1,5 @@
-name: Push updates
-on: workflow_dispatch
+name: Push updates to examples
+on: push
 jobs:
   updateexamples:
     runs-on: ubuntu-latest
@@ -29,6 +29,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Updated from latest code"
+          # Only commit if there is something changed that needs committing.
+          git diff-index --quiet HEAD || git commit "Updated from latest code"
           git push
 
