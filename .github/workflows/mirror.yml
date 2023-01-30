@@ -49,14 +49,14 @@ jobs:
           ssh-add -L
           echo git remote add origin https://github.com/diarmidmackenzie/sample-example
           git remote add origin https://github.com/diarmidmackenzie/sample-example
-          echo git pull origin main --no-rebase
-          git pull origin main --no-rebase
+          echo git pull origin main
+          git pull origin main
           echo git branch --set-upstream-to=origin/main main
-          git branch --set-upstream-to=origin/main main
+          #git branch --set-upstream-to=origin/main main
           echo git pull --allow-unrelated-histories --no-rebase
-          git pull --allow-unrelated-histories --no-rebase
+          #git pull --allow-unrelated-histories --no-rebase
           echo git push -u origin main
-          git push -u origin main
+          #git push -u origin main
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
